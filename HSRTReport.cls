@@ -16,11 +16,15 @@
 \cs_new_eq:NN \strcompare \str_if_eq:eeTF
 \ExplSyntaxOff
 
-% If not using XeTeX, print an error message and stop compiling
-\ifx\XeTeXversion\undefined
-	\PackageError{HSRTReport}{This class can only be used with XeLaTeX.}{}
-	\stop
-\fi
+% Tectonic/XeTeX compatibility - comment out check for broader compatibility
+%\ifx\XeTeXversion\undefined
+%	\PackageError{HSRTReport}{This class can only be used with XeLaTeX.}{}
+%	\stop
+%\fi
+
+% Define fallback font commands if they don't exist
+\providecommand{\blenderfont}{\sffamily}
+\providecommand{\dinfont}{\rmfamily}
 
 %----------------------------------------
 %   PATHS

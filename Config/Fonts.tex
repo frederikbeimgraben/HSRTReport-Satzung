@@ -10,9 +10,14 @@
 % ==============================================================================
 % Required Packages
 % ==============================================================================
-\RequirePackage{fontspec}
-\RequirePackage{anyfontsize}
 \RequirePackage{lmodern}
+\IfFileExists{fontspec.sty}{
+    \RequirePackage{fontspec}
+    \RequirePackage{anyfontsize}
+}{
+    % Fallback if fontspec not available
+    \PackageWarning{HSRTReport}{fontspec not available, using fallback fonts}
+}
 
 % ==============================================================================
 % Default Font Families
@@ -24,48 +29,113 @@
 % ==============================================================================
 % Custom Font Families
 % ==============================================================================
-% Blender font family for headings and special text
-\newfontfamily\blenderfont[
-	Path=\fontsPath/Blender/,
-	Extension=.ttf,
-	UprightFont=*-Medium,
-	BoldFont=*-Bold,
-	ItalicFont=*-MediumItalic,
-	BoldItalicFont=*-BoldItalic
-]{Blender}
+% Check if fontspec is loaded and fonts exist
+\IfFileExists{fontspec.sty}{
+    % Try multiple approaches to load custom fonts
+    % First try: Direct file path (works with some Tectonic setups)
+    \IfFileExists{\fontsPath/Blender/Blender-Medium.ttf}{
+        \newfontfamily\BlenderFont[
+            Path=\fontsPath/Blender/,
+            Extension=.ttf,
+            UprightFont=*-Medium,
+            BoldFont=*-Bold,
+            ItalicFont=*-MediumItalic,
+            BoldItalicFont=*-BoldItalic
+        ]{Blender}
+        \renewcommand{\blenderfont}{\BlenderFont}
+    }{
+        % Second try: Look for system-installed fonts by name
+        \IfFontExistsTF{Blender}{
+            \newfontfamily\BlenderFont{Blender}
+            \renewcommand{\blenderfont}{\BlenderFont}
+        }{
+            % Third try: Use similar system fonts
+            \IfFontExistsTF{Helvetica Neue}{
+                \newfontfamily\BlenderFont{Helvetica Neue}
+                \renewcommand{\blenderfont}{\BlenderFont}
+            }{
+                % Fallback to TeX Gyre Heros (Helvetica clone)
+                \newfontfamily\BlenderFont{TeX Gyre Heros}
+                \renewcommand{\blenderfont}{\BlenderFont}
+            }
+        }
+    }
 
-% DIN font family for body text
-\newfontfamily\dinfont[
-	Path=\fontsPath/DIN/,
-	Extension=.ttf,
-	UprightFont=*-Regular,
-	BoldFont=*-Bold,
-	ItalicFont=*-Italic,
-	BoldItalicFont=*-BoldItalic
-]{DIN}
+    \IfFileExists{\fontsPath/DIN/DIN-Regular.ttf}{
+        \newfontfamily\DINFont[
+            Path=\fontsPath/DIN/,
+            Extension=.ttf,
+            UprightFont=*-Regular,
+            BoldFont=*-Bold,
+            ItalicFont=*-Italic,
+            BoldItalicFont=*-BoldItalic
+        ]{DIN}
+        \renewcommand{\dinfont}{\DINFont}
+    }{
+        % Try system fonts
+        \IfFontExistsTF{DIN}{
+            \newfontfamily\DINFont{DIN}
+            \renewcommand{\dinfont}{\DINFont}
+        }{
+            % Fallback to TeX Gyre Termes (Times clone)
+            \newfontfamily\DINFont{TeX Gyre Termes}
+            \renewcommand{\dinfont}{\DINFont}
+        }
+    }
+}{
+    % Font commands are already defined in the class file
+    \renewcommand{\blenderfont}{\sffamily}
+    \renewcommand{\dinfont}{\rmfamily}
+}
 
 % ==============================================================================
 % Main Document Fonts
 % ==============================================================================
-% Set sans serif font (used for headings)
-\setsansfont{Blender}[
-	Path=\fontsPath/Blender/,
-	Extension=.ttf,
-	UprightFont=*-Medium,
-	BoldFont=*-Bold,
-	ItalicFont=*-MediumItalic,
-	BoldItalicFont=*-BoldItalic
-]
+\IfFileExists{fontspec.sty}{
+    % Set sans serif font (used for headings)
+    \IfFileExists{\fontsPath/Blender/Blender-Medium.ttf}{
+        \setsansfont{Blender}[
+            Path=\fontsPath/Blender/,
+            Extension=.ttf,
+            UprightFont=*-Medium,
+            BoldFont=*-Bold,
+            ItalicFont=*-MediumItalic,
+            BoldItalicFont=*-BoldItalic
+        ]
+    }{
+        \IfFontExistsTF{Blender}{
+            \setsansfont{Blender}
+        }{
+            \IfFontExistsTF{Helvetica Neue}{
+                \setsansfont{Helvetica Neue}
+            }{
+                \setsansfont{TeX Gyre Heros}
+            }
+        }
+    }
 
-% Set main font (used for body text)
-\setmainfont{DIN}[
-	Path=\fontsPath/DIN/,
-	Extension=.ttf,
-	UprightFont=*-Regular,
-	BoldFont=*-Bold,
-	ItalicFont=*-Italic,
-	BoldItalicFont=*-BoldItalic
-]
+    % Set main font (used for body text)
+    \IfFileExists{\fontsPath/DIN/DIN-Regular.ttf}{
+        \setmainfont{DIN}[
+            Path=\fontsPath/DIN/,
+            Extension=.ttf,
+            UprightFont=*-Regular,
+            BoldFont=*-Bold,
+            ItalicFont=*-Italic,
+            BoldItalicFont=*-BoldItalic
+        ]
+    }{
+        \IfFontExistsTF{DIN}{
+            \setmainfont{DIN}
+        }{
+            \setmainfont{TeX Gyre Termes}
+        }
+    }
+}{
+    % Non-fontspec systems use default fonts
+    \renewcommand*\rmdefault{lmr}
+    \renewcommand*\sfdefault{lmss}
+}
 
 % ==============================================================================
 % End of Fonts Configuration Module

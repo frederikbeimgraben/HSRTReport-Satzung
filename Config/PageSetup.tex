@@ -43,20 +43,15 @@
 
 \newcommand{\fancyfootL}{
 	\color{gray}\blenderfont
-	\raisebox{3pt}{
-		\hspace{-2pt}\@author
-	}
-	\newline
-	\raisebox{3pt}{
-		\hspace{-2pt}\ifdef{\modulename}{\modulename}{Modul-Name}
+	\parbox[t]{0.4\textwidth}{
+		\@author\\
+		\ifdef{\modulename}{\modulename}{Modul-Name}
 	}
 }
 
 \newcommand{\fancyfootC}{
-	\color{gray}\blenderfont\newline
-	\raisebox{3pt}{
-		Seite~\thepage~von~\pageref*{LastPage}
-	}
+	\color{gray}\blenderfont
+	Seite~\thepage~von~\pageref*{LastPage}
 }
 
 % ------------------------------------------------------------------------------
@@ -65,12 +60,11 @@
 % Left header: Chapter number and title
 % Right header: Document title
 \fancyhead[R]{%
-	\color{gray}\blenderfont
-
-	% show if chapter > 0
-	\ifthenelse{\value{chapter} > 0}{\thechapter~–~\leftmark}{}
-}
-\fancyhead[L]{\color{gray}\blenderfont\@title} % Document title on right
+	\ifnum\value{chapter}>0\relax
+		\textcolor{gray}{\thechapter~--~\leftmark}%
+	\fi%
+}%
+\fancyhead[L]{\textcolor{gray}{\@title}}%
 
 % Update chapter marks to show only chapter name without "Chapter" prefix
 \renewcommand{\chaptermark}[1]{\markboth{#1}{}}
@@ -94,14 +88,14 @@
 % Plain Page Style (for chapter pages)
 % ==============================================================================
 % Define the plain page style (used on chapter start pages)
-\fancypagestyle{plain}{
-	\fancyhf{}
+\fancypagestyle{plain}{%
+	\fancyhf{}%
 	\fancyhead[R]{%
-		\color{gray}\blenderfont
-
-		\ifthenelse{\value{chapter} > 0}{\thechapter~–~\leftmark}{}
-	}
-	\fancyhead[L]{\color{gray}\blenderfont\@title}
+		\ifnum\value{chapter}>0\relax
+			\textcolor{gray}{\thechapter~--~\leftmark}%
+		\fi%
+	}%
+	\fancyhead[L]{\textcolor{gray}{\@title}}%
 	\fancyfoot[C]{
 		\fancyfootC
 	}
@@ -115,14 +109,14 @@
 % Fancy Page Style Definition
 % ==============================================================================
 % Explicitly define the fancy page style
-\fancypagestyle{fancy}{
-	\fancyhf{}
+\fancypagestyle{fancy}{%
+	\fancyhf{}%
 	\fancyhead[R]{%
-		\color{gray}\blenderfont
-
-		\ifthenelse{\value{chapter} > 0}{\thechapter~–~\leftmark}{}
-	}
-	\fancyhead[L]{\color{gray}\blenderfont\@title}
+		\ifnum\value{chapter}>0\relax
+			\textcolor{gray}{\thechapter~--~\leftmark}%
+		\fi%
+	}%
+	\fancyhead[L]{\textcolor{gray}{\@title}}%
 	\fancyfoot[C]{
 		\fancyfootC
 	}
