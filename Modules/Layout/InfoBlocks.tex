@@ -3,12 +3,12 @@
 % ==============================================================================
 % Required Packages
 % ==============================================================================
-\RequirePackage{xcolor}       % For color definitions
-\RequirePackage{fp}           % For FPeval floating point calculations
-\RequirePackage{environ}      % For NewEnviron command
-\RequirePackage{mdframed}     % For framed boxes
-\RequirePackage{fontawesome5} % For icons
-\RequirePackage{keyval}       % For key-value parameters
+\RequirePackage{xcolor}
+\RequirePackage{fp}
+\RequirePackage{environ}
+\RequirePackage{mdframed}
+\RequirePackage{fontawesome5}
+\RequirePackage{keyval}
 
 % ==== Colors ====
 \definecolor{britishracinggreen}{rgb}{0.0, 0.26, 0.15}
@@ -79,7 +79,6 @@
          splittopskip=4pt,
          roundcorner=5pt
       ]
-         % [REFACTOR] using picture environment instead of tikz due to pgf errors
          \begin{picture}(\textwidth, 0)(0, 0)
             \put(\coloredBoxIconOffsetX-\coloredBoxIconSize,\coloredBoxIconOffsetY-0.7cm){
                \fontsize{\coloredBoxIconSize}{\coloredBoxIconSize}

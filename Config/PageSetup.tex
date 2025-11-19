@@ -10,11 +10,11 @@
 % ==============================================================================
 % Required Packages
 % ==============================================================================
-\RequirePackage{lastpage}  % For "Page X of Y" functionality
-\RequirePackage{fancyhdr}  % For headers and footers
-\RequirePackage{ifthen}    % For conditional statements
-\RequirePackage{xcolor}    % For color support (used for gray text)
-\RequirePackage{etoolbox}  % For \ifdef command
+\RequirePackage{lastpage}
+\RequirePackage{fancyhdr}
+\RequirePackage{ifthen}
+\RequirePackage{xcolor}
+\RequirePackage{etoolbox}
 
 % ==============================================================================
 % Page Style Configuration
@@ -22,7 +22,6 @@
 % Use fancy page style for headers and footers
 \pagestyle{fancy}
 
-% Remove default header rule
 \renewcommand{\headrulewidth}{0pt}
 
 % Override KOMA-Script chapter page style to use fancy instead of plain
@@ -40,7 +39,6 @@
 % ==============================================================================
 % Header and Footer Setup
 % ==============================================================================
-% Clear all header and footer fields
 \fancyhf{}
 
 \newcommand{\fancyfootL}{
@@ -76,7 +74,7 @@
 
 % Update chapter marks to show only chapter name without "Chapter" prefix
 \renewcommand{\chaptermark}[1]{\markboth{#1}{}}
-\renewcommand{\sectionmark}[1]{}  % Don't show sections in header
+\renewcommand{\sectionmark}[1]{}
 
 \newcommand{\footerhorizspacing}{\qquad}
 
@@ -98,15 +96,12 @@
 % Define the plain page style (used on chapter start pages)
 \fancypagestyle{plain}{
 	\fancyhf{}
-	% Show headers also on chapter start pages
 	\fancyhead[R]{%
 		\color{gray}\blenderfont
 
-		% show if chapter > 0
 		\ifthenelse{\value{chapter} > 0}{\thechapter~–~\leftmark}{}
 	}
 	\fancyhead[L]{\color{gray}\blenderfont\@title}
-	% Same footer as regular pages
 	\fancyfoot[C]{
 		\fancyfootC
 	}
@@ -125,7 +120,6 @@
 	\fancyhead[R]{%
 		\color{gray}\blenderfont
 
-		% show if chapter > 0
 		\ifthenelse{\value{chapter} > 0}{\thechapter~–~\leftmark}{}
 	}
 	\fancyhead[L]{\color{gray}\blenderfont\@title}

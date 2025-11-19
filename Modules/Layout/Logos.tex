@@ -10,14 +10,14 @@
 % ==============================================================================
 % Required Packages
 % ==============================================================================
-\RequirePackage{tikz}          % For drawing and positioning
-\RequirePackage{tikzpagenodes} % For page node references
-\RequirePackage{graphicx}      % For including images
-\RequirePackage{arrayjobx}     % For array handling
-\RequirePackage{etoolbox}      % For \patchcmd
-\RequirePackage{bophook}       % For \AtBeginPage
-\RequirePackage{calc}          % For calculations with lengths
-\RequirePackage{ifthen}        % For conditional statements
+\RequirePackage{tikz}
+\RequirePackage{tikzpagenodes}
+\RequirePackage{graphicx}
+\RequirePackage{arrayjobx}
+\RequirePackage{etoolbox}
+\RequirePackage{bophook}
+\RequirePackage{calc}
+\RequirePackage{ifthen}
 
 % ==============================================================================
 % Logo Scale Settings
@@ -122,7 +122,6 @@
 		};
 		\ifnum\thepage=0
 		\else
-			% For loop to place all logos
 			\foreach \i in {1,...,\value{logoCounter}} {
 					% Calculate name for i-1
 					\pgfmathtruncatemacro{\prev}{\i-1}

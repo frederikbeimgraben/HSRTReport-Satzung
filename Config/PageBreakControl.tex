@@ -11,11 +11,11 @@
 % ==============================================================================
 % Required Packages
 % ==============================================================================
-\RequirePackage{needspace}  % For conditional page breaks based on available space
-\RequirePackage{afterpage}  % For deferred page break commands
-\RequirePackage{placeins}   % For section barriers to control float placement
-\RequirePackage{etoolbox}   % For \pretocmd, \apptocmd, \AtBeginEnvironment commands
-\RequirePackage{ifthen}     % For conditional statements
+\RequirePackage{needspace}
+\RequirePackage{afterpage}
+\RequirePackage{placeins}
+\RequirePackage{etoolbox}
+\RequirePackage{ifthen}
 \RequirePackage{listings}
 
 % ==============================================================================
@@ -175,7 +175,6 @@
 % ==============================================================================
 % Code Block Protection
 % ==============================================================================
-% For verbatim environments
 \AtBeginEnvironment{verbatim}{%
 	\nopagebreak[4]%
 	\interlinepenalty=10000%
