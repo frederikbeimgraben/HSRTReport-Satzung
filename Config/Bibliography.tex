@@ -13,8 +13,13 @@
 \RequirePackage[
 	backend=bibtex,
 	sorting=nyt,
-	style=authoryear,
-	citestyle=authoryear
+	style=authoryear-comp,
+	citestyle=authoryear-comp,
+	maxcitenames=2,
+	maxbibnames=99,
+	giveninits=true,
+	uniquelist=false,
+	dashed=false
 ]{biblatex}
 \RequirePackage{csquotes}
 
@@ -22,6 +27,7 @@
 % BibLaTeX Hyperlink Configuration
 % ==============================================================================
 % Make entire citation content clickable, not just parts of it
+% Configure for APA-like formatting with bibtex backend
 
 % Load hyperref support for biblatex
 \ExecuteBibliographyOptions{
