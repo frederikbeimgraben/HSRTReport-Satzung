@@ -2,7 +2,34 @@
 
 \newcommand{\createdon}[1]{\gdef\@createdon{#1}}
 
+
+% ==============================================================================
+% Title Page Data Management
+% ==============================================================================
+% Token register to store title page data
+\newtoks\titlePageData
+\def\tand{&}
+\titlePageData={\tand}
+
+% Add vertical space to title page data
+\DeclareRobustCommand{\AddTitlePageDataSpace}[1]{
+	\titlePageData=\expandafter{\the\titlePageData \vspace{#1}}
+}
+
+% Add a data line to title page (key-value pair)
+\DeclareRobustCommand{\AddTitlePageDataLine}[2]{
+	\titlePageData=\expandafter{\the\titlePageData\\ \textbf{#1}\tand #2}
+}
+
+% Get formatted title page data table
+\DeclareRobustCommand{\GetTitlePageDataTable}{
+	\begin{tabular}{@{} p{30mm} p{\textwidth-30mm-2\tabcolsep}}
+		\the\titlePageData
+	\end{tabular}
+}
+
 \renewcommand{\maketitle}{
+  \setcounter{page}{0}
 	\providecommand{\titlepageabstract}{%
 		Dies ist ein Beispiel für ein Abstract. Es sollte eine kurze Zusammenfassung des Inhalts des Seminars sein.
 	}
@@ -15,34 +42,22 @@
 			\node[anchor=south east, inner sep=0pt, xshift=-0.1cm, yshift=0.1cm] (heart) at (current page.south east) {
 				\href{https://github.com/frederikbeimgraben/HSRT-Report}{\tiny\color{gray}\blenderfont Made with {\ensuremath\heartsuit} in \LaTeX}
 			};
-			\node[anchor=north west, inner sep=0pt, xshift=1.3cm, yshift=-1.5cm, opacity=0] (logo0) at (current page.north west) {
+			\node[anchor=north west, inner sep=0pt, xshift=\leftmargin, yshift=-1.5cm, opacity=0] (logo0) at (current page.north west) {
 				\includegraphics[height=\imageHeight]{\imagesPath/DUMMY_FOOT.png}
 			};
 			\foreach \i in {1,...,\value{logoCounter}} {
 					% Calculate name for i-1
 					\pgfmathtruncatemacro{\prev}{\i-1}
-					\node[anchor=west, inner sep=0pt, xshift=-0.1cm, opacity=0.3] (logo\i) at (logo\prev.east) {
+					\node[anchor=west, inner sep=0pt, xshift=0.5cm] (logo\i) at (logo\prev.east) {
 						\makeatletter
 						\testarray{LogosScales}(\i)
 						\setlength{\imageHeight}{1.5cm*\real{\temp@macro}*\real{\logosScale}}
-						\testarray{LogosExtensions}(\i)
-						\let\extension\temp@macro
-						\testarray{LogosOpacities}(\i)
-						\let\opacity\temp@macro
 						\testarray{LogosPaths}(\i)
-						\ifthenelse{\equal{\extension}{svg}}{
-							\begin{tikzpicture}
-								\node[opacity=\opacity] {
-									\includesvg[height=\imageHeight]{\classPath/Assets/Images/\temp@macro.\extension}
-								};
-							\end{tikzpicture}
-						}{
-							\begin{tikzpicture}
-								\node[opacity=\opacity] {
-									\includegraphics[height=\imageHeight]{\classPath/Assets/Images/\temp@macro.\extension}
-								};
-							\end{tikzpicture}
-						}
+						\begin{tikzpicture}
+							\node[] {
+								\includegraphics[height=\imageHeight]{\logospath\temp@macro.pdf}
+							};
+						\end{tikzpicture}
 						\makeatother
 					};
 				}

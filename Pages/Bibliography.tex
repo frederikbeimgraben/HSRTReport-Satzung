@@ -1,0 +1,34 @@
+% !TEX root = ../Main.tex
+% ==============================================================================
+% Bibliography and References
+% ==============================================================================
+% Description: This file handles the bibliography generation and formatting.
+%              It uses BibLaTeX with Biber backend for advanced citation
+%              management and formatting capabilities.
+% Author: Frederik Beimgraben
+% Date: 19.11.2025
+% ==============================================================================
+
+% ------------------------------------------------------------------------------
+% Bibliography Chapter
+% ------------------------------------------------------------------------------
+% Create a new chapter for the bibliography
+% This appears in the table of contents as "Literaturverzeichnis"
+% ------------------------------------------------------------------------------
+\newcommand{\makebib}{
+  \clearpage
+  \chapter*{Literaturverzeichnis}
+  \label{chap:bibliography}
+
+  % ------------------------------------------------------------------------------
+  % Bibliography Generation
+  % ------------------------------------------------------------------------------
+  % Print the bibliography using BibLaTeX
+  % The bibliography style and sorting are configured in the document class
+  % All entries from Main.bib that are cited in the document will appear here
+  % ------------------------------------------------------------------------------
+  \printbibliography[
+  	heading=none,           % Suppress automatic heading (we use \chapter above)
+  	title={}                % Empty title since we already have the chapter title
+  ]
+}

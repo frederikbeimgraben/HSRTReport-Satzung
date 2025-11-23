@@ -10,7 +10,6 @@
 % ==============================================================================
 % Required Packages
 % ==============================================================================
-\RequirePackage{lastpage}
 \RequirePackage{fancyhdr}
 \RequirePackage{ifthen}
 \RequirePackage{xcolor}
@@ -41,46 +40,69 @@
 % ==============================================================================
 \fancyhf{}
 
-\newcommand{\fancyfootL}{
-	\color{gray}\blenderfont
-	\@author\\
-	\ifdef{\modulename}{\modulename}{Modul-Name}
-}
-
-\newcommand{\fancyfootC}{
-	\color{gray}\blenderfont
-	Seite~\thepage~von~\pageref*{LastPage}
+\AtEndDocument{
+  \immediate\write\@auxout{\string\gdef\string\@lastpage{\thepage}}
 }
 
 % ------------------------------------------------------------------------------
-% Header Configuration
+% Header and Footer Configuration
 % ------------------------------------------------------------------------------
 % Left header: Chapter number and title
 % Right header: Document title
-\fancyhead[R]{%
-	\ifnum\value{chapter}>0\relax
-		\textcolor{gray}{\thechapter~--~\leftmark}%
+% Left footer: Author and module name
+% Center footer: Page number
+\def\hffont{\color{gray}\blenderfont}
+
+\newcommand{\fancyfootL}{
+  \hffont
+  \vspace{-1.25em}
+  \def\arraystretch{1}
+  \begin{tabular}{l}
+    \@author \\
+    \ifdef{\modulename}{\modulename}{Modul-Name}
+  \end{tabular}
+}
+
+\newcommand{\fancyfootC}{
+  \hffont
+	Seite~\thepage~von~\@ifundefined{@lastpage}{??}{\@lastpage}
+}
+
+\newcommand{\fancyheadR}{
+  \hffont
+  \ifnum\value{chapter}>0\relax
+    \thechapter~–~\leftmark
 	\fi%
-}%
-\fancyhead[L]{\textcolor{gray}{\@title}}%
+}
+
+\newcommand{\fancyheadL}{
+  \hffont
+	\@title
+}
+
+\newcommand{\applyhfstyles}{
+  \fancyhead[R]{
+    \fancyheadR
+  }
+  \fancyhead[L]{
+    \fancyheadL
+  }
+  \fancyfoot[C]{
+    \fancyfootC
+  }
+  \fancyfoot[L]{
+    \fancyfootL
+  }
+}
+
+\newcommand{\footerhorizspacing}{\qquad}
+
+% Apply Styles
+\applyhfstyles
 
 % Update chapter marks to show only chapter name without "Chapter" prefix
 \renewcommand{\chaptermark}[1]{\markboth{#1}{}}
 \renewcommand{\sectionmark}[1]{}
-
-\newcommand{\footerhorizspacing}{\qquad}
-
-% ------------------------------------------------------------------------------
-% Footer Configuration
-% ------------------------------------------------------------------------------
-% Footer format: Author Name | Module Name | Page X of Y
-% The footer is centered
-\fancyfoot[L]{
-	\fancyfootL
-}
-\fancyfoot[C]{
-	\fancyfootC
-}
 
 % ==============================================================================
 % Plain Page Style (for chapter pages)
@@ -88,18 +110,7 @@
 % Define the plain page style (used on chapter start pages)
 \fancypagestyle{plain}{%
 	\fancyhf{}%
-	\fancyhead[R]{%
-		\ifnum\value{chapter}>0\relax
-			\textcolor{gray}{\thechapter~--~\leftmark}%
-		\fi%
-	}%
-	\fancyhead[L]{\textcolor{gray}{\@title}}%
-	\fancyfoot[C]{
-		\fancyfootC
-	}
-	\fancyfoot[L]{
-		\fancyfootL
-	}
+	\applyhfstyles
 	\renewcommand{\headrulewidth}{0pt}
 }
 
@@ -109,18 +120,7 @@
 % Explicitly define the fancy page style
 \fancypagestyle{fancy}{%
 	\fancyhf{}%
-	\fancyhead[R]{%
-		\ifnum\value{chapter}>0\relax
-			\textcolor{gray}{\thechapter~--~\leftmark}%
-		\fi%
-	}%
-	\fancyhead[L]{\textcolor{gray}{\@title}}%
-	\fancyfoot[C]{
-		\fancyfootC
-	}
-	\fancyfoot[L]{
-		\fancyfootL
-	}
+	\applyhfstyles
 }
 
 % ==============================================================================

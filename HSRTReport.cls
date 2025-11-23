@@ -48,24 +48,29 @@
 \ProcessKeysOptions { ReportOptions }
 \ExplSyntaxOff
 \providecommand{\ReportVariant}{meti}
-\AtBeginDocument{
-  \typeout{INFO – Selected Report Variant: \ReportVariant}
-}
 
 %----------------------------------------
 %   CLASS DEFINITION AND PARAMETERS
 %----------------------------------------
 % Original: ZHAWReport.cls by Martin Oswald
+\def\true{true}
+\def\false{false}
+
 \NeedsTeXFormat{LaTeX2e}
 \newcommand{\classname}{HSRTReport/HSRTReport}
 \ProvidesClass{\classname}[HSRT Report Class]
 \providecommand{\baseclass}{scrreprt}
 
-% Options for this class
-\DeclareOption{variant}{} % Handled by keys_define:nn { ReportOptions }
+% Option setting if to show footer logos
+\def\ShowFooterLogos{\false}
+\DeclareOption{footerlogos}{
+  \def\ShowFooterLogos{\true}
+}
 
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{\baseclass}}
 \ProcessOptions\relax
+
+% Pass 2cm border on each side to class
 
 % Load the base class with options
 \LoadClass{\baseclass}
@@ -79,7 +84,9 @@
 % ==============================================================================
 % Module Includes
 % ==============================================================================
-\input{\classPath/Pages/Titlepage.tex}
+\input{\classPath/Pages/Titlepage}
+\input{\classPath/Pages/Bibliography}
+\input{\classPath/Pages/TOC}
 
 % ------------------------------------------------------------------------------
 % Configuration Modules
@@ -111,3 +118,17 @@
 % Tool Modules
 % ------------------------------------------------------------------------------
 \input{\classPath/Modules/Tools/WordCount}
+
+% ------------------------------------------------------------------------------
+% Add Pages
+% ------------------------------------------------------------------------------
+\AtBeginDocument{
+  \typeout{INFO – Selected Report Variant: \ReportVariant}
+  \maketitle
+  \setstretch{1.0}
+  \maketoc
+}
+
+\AtEndEnvironment{document}{
+  \makebib
+}
