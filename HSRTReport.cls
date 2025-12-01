@@ -79,10 +79,16 @@
   \def\ShowAcronyms{\true}
 }
 
-% Option setting if to omit toc
-\def\ShowToC{\true}
-\DeclareOption{notoc}{
-  \def\ShowToC{\false}
+% Option setting if to include toc
+\def\ShowToC{\false}
+\DeclareOption{toc}{
+  \def\ShowToC{\true}
+}
+
+% Option setting if to include bibliography
+\def\ShowBibliography{\false}
+\DeclareOption{bibliography}{
+  \def\ShowBibliography{\true}
 }
 
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{\baseclass}}
@@ -142,11 +148,8 @@
 % ------------------------------------------------------------------------------
 \AtBeginDocument{
   \frontmatter
-  \typeout{INFO – Selected Report Variant: \ReportVariant}
   \maketitle
-  \newpage
-  \def\istitlepage=\false
-  \setstretch{1.0}
+  \newpage\def\istitlepage=\false\setstretch{1.0}
   \strcompare{\ShowToC}{\true}{
    	\tableofcontents
   }{}
@@ -154,11 +157,10 @@
 }
 
 \AtEndEnvironment{document}{
-  \newpage
-  \appendix
-  \backmatter
-  \cfoot*{}% Remove page number at footer.
-  \ohead*{}% Addd page number to the header.
+  \newpage\appendix\backmatter
+  \cfoot*{}\ohead*{}
   \makeglossarypages
-  \makebib
+  \strcompare{\ShowBibliography}{\true}{
+    \makebib
+  }{}
 }
