@@ -13,19 +13,19 @@
 
  	% --- Main Glossary ---
  	% Print main glossary with German header "Wort"
-  \strcompare{\ShowGlossary}{\true}{
+ 	{
 		\renewcommand*{\entryname}{Wort}
 		\clearpage
 		\vspace*{-2.25em}
 		\printglossary
- 	}{}
+ 	}
 
  	% --- List of Abbreviations ---
  	% Print abbreviation glossary with German header "Abkürzung"
-  \strcompare{\ShowAcronyms}{\true}{
+ 	{
 		\renewcommand*{\entryname}{Abkürzung}
 		\clearpage
 		\vspace*{-2.25em}
 		\printglossary[type=\acronymtype,title=Abkürzungen]
- 	}{}
+ 	}
 }

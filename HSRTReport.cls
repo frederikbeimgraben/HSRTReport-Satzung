@@ -67,30 +67,6 @@
   \def\ShowFooterLogos{\true}
 }
 
-% Option setting if to include glossary
-\def\ShowGlossary{\false}
-\DeclareOption{glossary}{
-  \def\ShowGlossary{\true}
-}
-
-% Option setting if to include glossary for acronyms
-\def\ShowAcronyms{\false}
-\DeclareOption{acronyms}{
-  \def\ShowAcronyms{\true}
-}
-
-% Option setting if to include toc
-\def\ShowToC{\false}
-\DeclareOption{toc}{
-  \def\ShowToC{\true}
-}
-
-% Option setting if to include bibliography
-\def\ShowBibliography{\false}
-\DeclareOption{bibliography}{
-  \def\ShowBibliography{\true}
-}
-
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{\baseclass}}
 \ProcessOptions\relax
 
@@ -116,11 +92,11 @@
 % Configuration Modules
 % ------------------------------------------------------------------------------
 \input{\classPath/Config/Hyperref}
-\input{\classPath/Config/Bibliography}
+%\input{\classPath/Config/Bibliography}
 \input{\classPath/Config/Fonts}
 \input{\classPath/Config/PageSetup}
 \input{\classPath/Config/Sections}
-\input{\classPath/Config/GlossarySettings}
+%\input{\classPath/Config/GlossarySettings}
 \input{\classPath/Config/ToC}
 \input{\classPath/Config/Typography}
 \input{\classPath/Config/PageBreakControl}
@@ -147,20 +123,11 @@
 % Add Pages
 % ------------------------------------------------------------------------------
 \AtBeginDocument{
-  \frontmatter
   \maketitle
-  \newpage\def\istitlepage=\false\setstretch{1.0}
-  \strcompare{\ShowToC}{\true}{
-   	\tableofcontents
-  }{}
-  \mainmatter
-}
-
-\AtEndEnvironment{document}{
-  \newpage\appendix\backmatter
-  \cfoot*{}\ohead*{}
-  \makeglossarypages
-  \strcompare{\ShowBibliography}{\true}{
-    \makebib
-  }{}
+  \newpage
+  \setstretch{1.0}
+  \pagestyle{tocpage}
+ 	\tableofcontents
+  \newpage
+  \pagestyle{scrheadings}
 }

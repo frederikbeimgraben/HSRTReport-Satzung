@@ -11,6 +11,7 @@
 % Required Packages
 % ==============================================================================
 \RequirePackage{xcolor}
+\RequirePackage{chngcntr}
 
 % ==============================================================================
 % Section Font Configuration
@@ -19,23 +20,13 @@
 \setkomafont{disposition}{\blenderfont\bfseries}
 
 % Configure individual section level fonts
-\setkomafont{chapter}{\LARGE\blenderfont\bfseries}
-\setkomafont{section}{\Large\blenderfont\bfseries}
-\setkomafont{subsection}{\large\blenderfont\bfseries}
+\setkomafont{chapter}{\Huge\blenderfont\bfseries}
+\setkomafont{section}{\LARGE\blenderfont\bfseries}
+\setkomafont{subsection}{\Large\blenderfont\bfseries}
 \setkomafont{subsubsection}{\large\blenderfont\bfseries}
 
-% ==============================================================================
-% Make current section/chapter name available as \Chaptername, \Sectionname,
-% \Subsectionname, \Subsubsectionname
-% ==============================================================================
-\let\Chaptermark\chaptermark
-\def\chaptermark#1{\def\Chaptername{#1}\Chaptermark{#1}}
-\let\Sectionmark\sectionmark
-\def\sectionmark#1{\def\Sectionname{#1}\Sectionmark{#1}}
-\let\Subsectionmark\subsectionmark
-\def\subsectionmark#1{\def\Subsectionname{#1}\Subsectionmark{#1}}
-\let\Subsubsectionmark\subsubsectionmark
-\def\subsubsectionmark#1{\def\Subsubsectionname{#1}\Subsubsectionmark{#1}}
+\counterwithout{subsection}{section}
+\counterwithout{subsection}{chapter}
 
 % ==============================================================================
 % Section Spacing Configuration

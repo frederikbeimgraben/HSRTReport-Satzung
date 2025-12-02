@@ -50,11 +50,18 @@
 \RedeclareSectionCommands[
 	tocentryformat=\blenderfont\normalsize,
 	tocpagenumberformat=\blenderfont\normalsize,
+	tocindent=1.5em,% Indent for sections
+	tocnumwidth=2.5em% Width for section numbers
 ]{section,subsection}
+
+% Add spacing before sections in TOC
+\RedeclareSectionCommand[
+	tocbeforeskip=0.5em,% Small space before section entries
+]{section}
 
 % Keep sections with their subsections
 \pretocmd{\addsectiontocentry}{%
-	\penalty-500 % Allow break before sections but discourage it
+	\penalty-500% Allow break before sections but discourage it
 }{}{}
 
 % Keep subsections together

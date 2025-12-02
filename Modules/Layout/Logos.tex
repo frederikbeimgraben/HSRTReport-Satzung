@@ -93,13 +93,14 @@
 	\setlength{\imageHeight}{2cm*\real{\mainLogoScale}*\real{\logosScale}*\real{0.45}}
 	\begin{tikzpicture}[overlay, remember picture]
 		% === Main Logo(s) ===
-		\node[anchor=south east, inner sep=0pt, xshift=-\rightmargin, yshift=\footerYShift, opacity=0.0] (logo0) at (current page.south east) {
+		\node[anchor=south east, inner sep=0pt, xshift=-\rightmargin-0.25cm, yshift=\footerYShift, opacity=0.0] (logo0) at (current page.south east) {
 			\strcompare{\thepage}{0}{}{
 				\includegraphics[height=\imageHeight]{\imagesPath/DUMMY_FOOT.png}
 			}
 		};
-		\ifdefstring{\istitlepage}{\true}{}{
-  		\strcompare{\ShowFooterLogos}{\true}{
+		\ifnum\value{page}=1
+		\else
+  		\ifdefstring{\ShowFooterLogos}{\true}{
   		  \foreach \i in {1,...,\value{logoCounter}} {
   				% Calculate name for i-1
   				\pgfmathtruncatemacro{\prev}{\i-1}
@@ -117,7 +118,7 @@
   				};
   			}
   		}{}
-		}
+		\fi
 		% Skyline
 		\node[anchor=south west, inner sep=0pt, yshift=0em] at (current page.south west) {
 			\includegraphics[width=1.5\paperwidth]{\skylinePath}

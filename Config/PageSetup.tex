@@ -14,7 +14,7 @@
 \RequirePackage{xcolor}
 \RequirePackage{etoolbox}
 \RequirePackage[singlespacing=true]{scrlayer-scrpage}
-\clearpairofpagestyles
+%\clearpairofpagestyles
 
 % ==============================================================================
 % Header and Footer Setup
@@ -32,29 +32,32 @@
 % Center footer: Page number
 \setkomafont{pageheadfoot}{\color{gray}\blenderfont}
 \setkomafont{pagenumber}{\color{gray}\blenderfont}
-\setlength{\footskip}{35pt}
+\setlength{\footskip}{60pt}
+\setlength{\headheight}{30pt}
+\setlength{\footheight}{30pt}
 
-\ohead*{
-  \ifnum\value{chapter}>0\relax
-    \Roman{\thechapter}~–~\Chaptername
-	\fi
+\ofoot*{}
+\ifoot{Stand \lastChanged}
+
+\cfoot{Seite~\thepage\@ifundefined{@lastpage}{}{~von~\@lastpage}}
+\ihead{\ifnum\value{page}=1\else\@title\fi}
+\let\oldmarkright\markright
+\renewcommand{\markright}[1]{\oldmarkright{\MakeUppercase{#1}}}
+\let\oldmarkleft\markleft
+\renewcommand{\markleft}[1]{}
+\renewcommand{\markboth}[2]{}
+\renewcommand{\chaptermark}[1]{\markright{\Roman{chapter}. \MakeUppercase{#1}}}
+\renewcommand{\sectionmark}[1]{\oldmarkleft{#1}}
+\ohead*{\rightmark\\\leftmark}
+\chead*{}
+
+\newpairofpagestyles{tocpage}{
+  \ohead{INHALT\\~}
+  \ofoot{}
+  \ihead{\@title}
+  \ifoot{Stand \lastChanged}
+  \cfoot{Seite~\thepage\@ifundefined{@lastpage}{}{~von~\@lastpage}}
 }
-
-\ifoot{\@author}
-
-\cfoot{
-  \ifnum\value{chapter}>0\relax
-    Seite~\thepage\@ifundefined{@lastpage}{}{~von~\@lastpage}
-	\fi
-}
-
-\ohead{
-  \ifnum\value{chapter}>0\relax
-    \thechapter~–~\Chaptername
-	\fi
-}
-
-\ihead{\@title}
 
 \pagestyle{scrheadings}
 
